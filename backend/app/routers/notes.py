@@ -11,7 +11,7 @@ from app.schemas.note import NoteCreate, NoteUpdate, NoteResponse
 router = APIRouter()
 
 
-@router.post("/", response_model=NoteResponse, status_code=201)
+@router.post("", response_model=NoteResponse, status_code=201)
 def create_note(
     data: NoteCreate,
     db: Session = Depends(get_db),

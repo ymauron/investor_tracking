@@ -15,7 +15,7 @@ from app.schemas.lp_commitment import (
 router = APIRouter()
 
 
-@router.get("/", response_model=list[LPCommitmentResponse])
+@router.get("", response_model=list[LPCommitmentResponse])
 def list_lp_commitments(
     db: Session = Depends(get_db),
     _user=Depends(get_current_user),
@@ -23,7 +23,7 @@ def list_lp_commitments(
     return db.query(LPCommitment).all()
 
 
-@router.post("/", response_model=LPCommitmentResponse, status_code=201)
+@router.post("", response_model=LPCommitmentResponse, status_code=201)
 def create_lp_commitment(
     data: LPCommitmentCreate,
     db: Session = Depends(get_db),

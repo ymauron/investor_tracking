@@ -37,7 +37,7 @@ def _to_response(event: MovementEvent) -> MovementEventResponse:
     )
 
 
-@router.get("/", response_model=list[MovementEventResponse])
+@router.get("", response_model=list[MovementEventResponse])
 def list_movements(
     individual_id: UUID | None = None,
     from_date: date | None = None,
@@ -84,7 +84,7 @@ def get_movement(
     return _to_response(event)
 
 
-@router.post("/", response_model=MovementEventResponse, status_code=201)
+@router.post("", response_model=MovementEventResponse, status_code=201)
 def create_movement(
     data: MovementEventCreate,
     db: Session = Depends(get_db),

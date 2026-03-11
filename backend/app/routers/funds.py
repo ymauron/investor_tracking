@@ -13,7 +13,7 @@ from app.schemas.lp_commitment import LPCommitmentResponse
 router = APIRouter()
 
 
-@router.get("/", response_model=list[FundVehicleResponse])
+@router.get("", response_model=list[FundVehicleResponse])
 def list_funds(
     db: Session = Depends(get_db),
     _user=Depends(get_current_user),
@@ -33,7 +33,7 @@ def get_fund(
     return fund
 
 
-@router.post("/", response_model=FundVehicleResponse, status_code=201)
+@router.post("", response_model=FundVehicleResponse, status_code=201)
 def create_fund(
     data: FundVehicleCreate,
     db: Session = Depends(get_db),

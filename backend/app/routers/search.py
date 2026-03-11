@@ -8,7 +8,7 @@ from app.services.search import global_search
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("")
 def search(
     q: str = Query(..., min_length=1),
     db: Session = Depends(get_db),

@@ -26,7 +26,7 @@ from app.schemas.note import NoteResponse
 router = APIRouter()
 
 
-@router.get("/", response_model=list[IndividualListResponse])
+@router.get("", response_model=list[IndividualListResponse])
 def list_individuals(
     search: str | None = None,
     therapeutic_area: TherapeuticArea | None = None,
@@ -73,7 +73,7 @@ def get_individual(
     return individual
 
 
-@router.post("/", response_model=IndividualDetailResponse, status_code=201)
+@router.post("", response_model=IndividualDetailResponse, status_code=201)
 def create_individual(
     data: IndividualCreate,
     db: Session = Depends(get_db),

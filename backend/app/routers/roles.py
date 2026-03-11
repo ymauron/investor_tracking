@@ -11,7 +11,7 @@ from app.schemas.role import RoleCreate, RoleUpdate, RoleResponse
 router = APIRouter()
 
 
-@router.post("/", response_model=RoleResponse, status_code=201)
+@router.post("", response_model=RoleResponse, status_code=201)
 def create_role(
     data: RoleCreate,
     db: Session = Depends(get_db),

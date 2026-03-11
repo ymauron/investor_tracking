@@ -13,7 +13,7 @@ from app.schemas.deal import DealCreate, DealUpdate, DealResponse
 router = APIRouter()
 
 
-@router.get("/", response_model=list[DealResponse])
+@router.get("", response_model=list[DealResponse])
 def list_deals(
     therapeutic_area: TherapeuticArea | None = None,
     individual_id: UUID | None = None,
@@ -71,7 +71,7 @@ def get_deal(
     return deal
 
 
-@router.post("/", response_model=DealResponse, status_code=201)
+@router.post("", response_model=DealResponse, status_code=201)
 def create_deal(
     data: DealCreate,
     db: Session = Depends(get_db),

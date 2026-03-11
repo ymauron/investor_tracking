@@ -16,7 +16,7 @@ from app.schemas.firm import (
 router = APIRouter()
 
 
-@router.get("/", response_model=list[PortfolioCompanyResponse])
+@router.get("", response_model=list[PortfolioCompanyResponse])
 def list_portfolio_companies(
     search: str | None = None,
     therapeutic_area: TherapeuticArea | None = None,
@@ -45,7 +45,7 @@ def get_portfolio_company(
     return portco
 
 
-@router.post("/", response_model=PortfolioCompanyResponse, status_code=201)
+@router.post("", response_model=PortfolioCompanyResponse, status_code=201)
 def create_portfolio_company(
     data: PortfolioCompanyCreate,
     db: Session = Depends(get_db),

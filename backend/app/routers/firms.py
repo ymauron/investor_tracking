@@ -21,7 +21,7 @@ from app.schemas.individual import IndividualListResponse
 router = APIRouter()
 
 
-@router.get("/", response_model=list[ManagementCompanyResponse])
+@router.get("", response_model=list[ManagementCompanyResponse])
 def list_firms(
     search: str | None = None,
     firm_type: FirmType | None = None,
@@ -51,7 +51,7 @@ def get_firm(
     return firm
 
 
-@router.post("/", response_model=ManagementCompanyResponse, status_code=201)
+@router.post("", response_model=ManagementCompanyResponse, status_code=201)
 def create_firm(
     data: ManagementCompanyCreate,
     db: Session = Depends(get_db),
