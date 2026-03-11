@@ -1,6 +1,11 @@
-version: "3.9"
-
 services:
+  db:
+    ports: []
+
   backend:
+    ports: []
     volumes: []
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2
+
+  frontend:
+    ports: []

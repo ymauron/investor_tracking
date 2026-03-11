@@ -1,0 +1,3 @@
+investor-watch.ch {
+    reverse_proxy frontend:80
+}
