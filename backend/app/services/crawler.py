@@ -24,8 +24,6 @@ logger = logging.getLogger(__name__)
 FEED_URLS: dict[TransactionSource, list[str]] = {
     TransactionSource.biospace: [
         "https://www.biospace.com/deals.rss",
-        "https://www.biospace.com/FDA.rss",
-        "https://www.biospace.com/drug-development.rss",
     ],
     TransactionSource.fierce_biotech: [
         "https://www.fiercebiotech.com/rss/xml",
@@ -33,6 +31,14 @@ FEED_URLS: dict[TransactionSource, list[str]] = {
     TransactionSource.fierce_pharma: [
         "https://www.fiercepharma.com/rss/xml",
     ],
+}
+
+ALLOWED_TYPES = {
+    TransactionType.ma,
+    TransactionType.ipo,
+    TransactionType.licensing,
+    TransactionType.funding_round,
+    TransactionType.partnership,
 }
 
 TYPE_KEYWORDS: dict[TransactionType, list[str]] = {
@@ -47,19 +53,6 @@ TYPE_KEYWORDS: dict[TransactionType, list[str]] = {
     TransactionType.licensing: [
         "licens", "license agreement", "royalt", "sublicens",
     ],
-    TransactionType.clinical_trial: [
-        "phase 1", "phase 2", "phase 3", "phase i", "phase ii", "phase iii",
-        "clinical trial", "pivotal study", "pivotal trial", "endpoint",
-        "trial results", "readout", "topline data",
-    ],
-    TransactionType.fda_approval: [
-        "fda approv", "cleared by fda", "nda approv", "bla approv",
-        "fda grants", "fda clears", "receives fda",
-    ],
-    TransactionType.fda_rejection: [
-        "complete response letter", "crl", "fda reject", "refus",
-        "not approved", "fda decline",
-    ],
     TransactionType.funding_round: [
         "series a", "series b", "series c", "series d", "series e",
         "funding round", "raises $", "raised $", "secures $", "secured $",
@@ -68,9 +61,6 @@ TYPE_KEYWORDS: dict[TransactionType, list[str]] = {
     TransactionType.partnership: [
         "partner", "collaborat", "alliance", "joint venture", "strategic deal",
         "co-develop",
-    ],
-    TransactionType.bankruptcy: [
-        "bankrupt", "chapter 11", "chapter 7", "insolven", "wind down",
     ],
 }
 
@@ -114,13 +104,17 @@ def fetch_feed(url: str) -> feedparser.FeedParserDict:
     return feedparser.parse(resp.text)
 
 
+def strip_html(text: str) -> str:
+    return re.sub(r"<[^>]+>", "", text).strip()
+
+
 def classify_transaction_type(title: str, description: str) -> TransactionType | None:
     text = f"{title} {description}".lower()
     for ttype, keywords in TYPE_KEYWORDS.items():
         for kw in keywords:
             if kw in text:
                 return ttype
-    return TransactionType.other
+    return None
 
 
 def classify_stage(title: str, description: str) -> ClinicalStage | None:
@@ -219,10 +213,14 @@ def crawl_all_feeds(db: Session) -> dict:
                         stats["skipped"] += 1
                         continue
 
-                    title = getattr(entry, "title", "").strip()
-                    description = getattr(entry, "description", "") or ""
-                    description = re.sub(r"<[^>]+>", "", description).strip()
+                    title = strip_html(getattr(entry, "title", ""))
+                    description = strip_html(getattr(entry, "description", "") or "")
                     full_text = f"{title} {description}"
+
+                    txn_type = classify_transaction_type(title, description)
+                    if txn_type not in ALLOWED_TYPES:
+                        stats["skipped"] += 1
+                        continue
 
                     companies = extract_companies(full_text)
                     portco_id = match_to_portfolio_company(db, companies)
@@ -234,7 +232,7 @@ def crawl_all_feeds(db: Session) -> dict:
                         source=source,
                         published_at=parse_published_date(entry),
                         raw_description=description[:5000] if description else None,
-                        transaction_type=classify_transaction_type(title, description),
+                        transaction_type=txn_type,
                         companies_mentioned=companies if companies else None,
                         deal_value_mm=extract_deal_value(full_text),
                         therapeutic_area=classify_therapeutic_area(title, description),

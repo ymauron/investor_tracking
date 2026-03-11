@@ -119,9 +119,6 @@ export function AlertRulesPage() {
                 <option value="ma">M&A</option>
                 <option value="ipo">IPO</option>
                 <option value="licensing">Licensing</option>
-                <option value="clinical_trial">Clinical Trial</option>
-                <option value="fda_approval">FDA Approval</option>
-                <option value="fda_rejection">FDA Rejection</option>
                 <option value="funding_round">Funding Round</option>
                 <option value="partnership">Partnership</option>
               </select>

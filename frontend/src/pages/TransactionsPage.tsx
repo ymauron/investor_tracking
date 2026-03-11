@@ -130,13 +130,8 @@ export function TransactionsPage() {
           <option value="ma">M&A</option>
           <option value="ipo">IPO</option>
           <option value="licensing">Licensing</option>
-          <option value="clinical_trial">Clinical Trial</option>
-          <option value="fda_approval">FDA Approval</option>
-          <option value="fda_rejection">FDA Rejection</option>
           <option value="funding_round">Funding Round</option>
           <option value="partnership">Partnership</option>
-          <option value="bankruptcy">Bankruptcy</option>
-          <option value="other">Other</option>
         </select>
         <select
           value={filters.source}
