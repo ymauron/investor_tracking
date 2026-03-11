@@ -16,7 +16,7 @@ class Note(Base):
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
     )
     entity_type: Mapped[EntityType] = mapped_column(
-        ENUM(EntityType, name="entity_type", create_type=False), nullable=False
+        ENUM(EntityType, name="entity_type", create_type=True), nullable=False
     )
     entity_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), nullable=False

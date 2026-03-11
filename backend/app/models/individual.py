@@ -21,7 +21,7 @@ class Individual(Base):
     email: Mapped[str | None] = mapped_column(String(255))
     phone: Mapped[str | None] = mapped_column(String(50))
     primary_therapeutic_area: Mapped[TherapeuticArea | None] = mapped_column(
-        ENUM(TherapeuticArea, name="therapeutic_area", create_type=False)
+        ENUM(TherapeuticArea, name="therapeutic_area", create_type=True)
     )
     relationship_status: Mapped[str | None] = mapped_column(String(100))
     personal_notes: Mapped[str | None] = mapped_column(Text)
@@ -63,7 +63,7 @@ class IndividualEducation(Base):
     degree_type: Mapped[str] = mapped_column(
         ENUM(
             "ba", "bs", "mba", "md", "phd", "md_phd", "jd", "mph", "ms", "other",
-            name="degree_type", create_type=False,
+            name="degree_type", create_type=True,
         ),
         nullable=False,
     )

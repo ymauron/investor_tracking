@@ -18,7 +18,7 @@ class ManagementCompany(Base):
     )
     name: Mapped[str] = mapped_column(String(300), nullable=False, unique=True)
     firm_type: Mapped[FirmType] = mapped_column(
-        ENUM(FirmType, name="firm_type", create_type=False), nullable=False
+        ENUM(FirmType, name="firm_type", create_type=True), nullable=False
     )
     website: Mapped[str | None] = mapped_column(String(500))
     hq_city: Mapped[str | None] = mapped_column(String(100))
@@ -56,7 +56,7 @@ class FundVehicle(Base):
     target_size_mm: Mapped[Decimal | None] = mapped_column(Numeric(12, 2))
     final_close_mm: Mapped[Decimal | None] = mapped_column(Numeric(12, 2))
     strategy_focus: Mapped[TherapeuticArea | None] = mapped_column(
-        ENUM(TherapeuticArea, name="therapeutic_area", create_type=False)
+        ENUM(TherapeuticArea, name="therapeutic_area", create_type=True)
     )
     status: Mapped[str | None] = mapped_column(String(50))
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
@@ -96,7 +96,7 @@ class PortfolioCompany(Base):
     )
     name: Mapped[str] = mapped_column(String(300), nullable=False)
     therapeutic_area: Mapped[TherapeuticArea | None] = mapped_column(
-        ENUM(TherapeuticArea, name="therapeutic_area", create_type=False)
+        ENUM(TherapeuticArea, name="therapeutic_area", create_type=True)
     )
     stage: Mapped[str | None] = mapped_column(String(50))
     website: Mapped[str | None] = mapped_column(String(500))

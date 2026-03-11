@@ -22,14 +22,14 @@ class Deal(Base):
         ForeignKey("portfolio_companies.id", ondelete="SET NULL"),
     )
     therapeutic_area: Mapped[TherapeuticArea | None] = mapped_column(
-        ENUM(TherapeuticArea, name="therapeutic_area", create_type=False)
+        ENUM(TherapeuticArea, name="therapeutic_area", create_type=True)
     )
     deal_date: Mapped[date | None] = mapped_column(Date)
     deal_type: Mapped[str | None] = mapped_column(String(50))
     deal_size_mm: Mapped[Decimal | None] = mapped_column(Numeric(12, 2))
     description: Mapped[str | None] = mapped_column(Text)
     confidence: Mapped[ConfidenceLevel] = mapped_column(
-        ENUM(ConfidenceLevel, name="confidence_level", create_type=False),
+        ENUM(ConfidenceLevel, name="confidence_level", create_type=True),
         default=ConfidenceLevel.confirmed,
     )
     source: Mapped[str | None] = mapped_column(String(500))

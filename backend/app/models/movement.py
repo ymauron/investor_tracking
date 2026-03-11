@@ -31,13 +31,13 @@ class MovementEvent(Base):
     departure_date: Mapped[date | None] = mapped_column(Date)
     joining_date: Mapped[date | None] = mapped_column(Date)
     move_type: Mapped[MoveType] = mapped_column(
-        ENUM(MoveType, name="move_type", create_type=False), nullable=False
+        ENUM(MoveType, name="move_type", create_type=True), nullable=False
     )
     is_spinout: Mapped[bool] = mapped_column(Boolean, default=False)
     reason: Mapped[str | None] = mapped_column(Text)
     carry_economics_notes: Mapped[str | None] = mapped_column(Text)
     confidence: Mapped[ConfidenceLevel] = mapped_column(
-        ENUM(ConfidenceLevel, name="confidence_level", create_type=False),
+        ENUM(ConfidenceLevel, name="confidence_level", create_type=True),
         default=ConfidenceLevel.rumor,
     )
     source_of_intel: Mapped[str | None] = mapped_column(String(500))
