@@ -1,0 +1,14 @@
+from app.routers import (
+    auth,
+    individuals,
+    firms,
+    funds,
+    portfolio_companies,
+    roles,
+    movements,
+    deals,
+    lp_commitments,
+    notes,
+    graph,
+    search,
+)
