@@ -22,6 +22,8 @@ from app.routers import (
     notes,
     graph,
     search,
+    transactions,
+    alerts,
 )
 
 
@@ -43,7 +45,10 @@ def seed_admin_user():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     seed_admin_user()
+    from app.services.scheduler import start_scheduler, stop_scheduler
+    start_scheduler()
     yield
+    stop_scheduler()
 
 
 app = FastAPI(
@@ -80,6 +85,8 @@ app.include_router(
 app.include_router(notes.router, prefix="/api/v1/notes", tags=["notes"])
 app.include_router(graph.router, prefix="/api/v1/graph", tags=["graph"])
 app.include_router(search.router, prefix="/api/v1/search", tags=["search"])
+app.include_router(transactions.router, prefix="/api/v1/transactions", tags=["transactions"])
+app.include_router(alerts.router, prefix="/api/v1/alerts", tags=["alerts"])
 
 
 @app.get("/api/v1/health")

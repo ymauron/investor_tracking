@@ -39,10 +39,11 @@ export function SearchBar() {
     if (item.type === 'individual') navigate(`/individuals/${item.id}`)
     else if (item.type === 'firm') navigate(`/firms/${item.id}`)
     else if (item.type === 'deal') navigate(`/deals/${item.id}`)
+    else if (item.type === 'transaction') navigate(`/transactions/${item.id}`)
   }
 
   const allResults = results
-    ? [...results.individuals, ...results.firms, ...results.deals]
+    ? [...results.individuals, ...results.firms, ...results.deals, ...results.transactions]
     : []
 
   return (
@@ -54,7 +55,7 @@ export function SearchBar() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => allResults.length > 0 && setOpen(true)}
-          placeholder="Search people, firms, deals..."
+          placeholder="Search people, firms, deals, transactions..."
           className="w-full pl-9 pr-8 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
         />
         {query && (
@@ -103,6 +104,21 @@ export function SearchBar() {
             <div>
               <div className="px-3 py-1.5 text-xs font-semibold text-gray-500 uppercase">Deals</div>
               {results!.deals.map((r) => (
+                <button
+                  key={r.id}
+                  onClick={() => handleSelect(r)}
+                  className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-gray-800 flex justify-between"
+                >
+                  <span>{r.name}</span>
+                  {r.detail && <span className="text-xs text-gray-400">{r.detail}</span>}
+                </button>
+              ))}
+            </div>
+          )}
+          {results!.transactions.length > 0 && (
+            <div>
+              <div className="px-3 py-1.5 text-xs font-semibold text-gray-500 uppercase">Transactions</div>
+              {results!.transactions.map((r) => (
                 <button
                   key={r.id}
                   onClick={() => handleSelect(r)}

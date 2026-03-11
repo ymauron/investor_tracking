@@ -7,6 +7,9 @@ class Settings(BaseSettings):
     admin_username: str = "admin"
     admin_password: str = "changeme"
     access_token_expire_hours: int = 24
+    crawl_schedule_hour: int = 7
+    crawl_schedule_minute: int = 0
+    crawl_enabled: bool = True
 
     class Config:
         env_file = ".env"

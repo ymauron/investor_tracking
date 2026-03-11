@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.models.individual import Individual
 from app.models.firm import ManagementCompany
 from app.models.deal import Deal
+from app.models.transaction import Transaction
 
 
 def global_search(db: Session, query: str, limit: int = 20) -> dict:
@@ -63,5 +64,17 @@ def global_search(db: Session, query: str, limit: int = 20) -> dict:
                 "detail": d.deal_type,
             }
             for d in deals
+        ],
+        "transactions": [
+            {
+                "id": str(t.id),
+                "type": "transaction",
+                "name": t.title,
+                "detail": t.transaction_type.value if t.transaction_type else None,
+            }
+            for t in db.query(Transaction)
+            .filter(Transaction.title.ilike(pattern))
+            .limit(limit)
+            .all()
         ],
     }

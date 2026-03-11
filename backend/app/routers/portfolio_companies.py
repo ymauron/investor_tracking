@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.firm import PortfolioCompany
+from app.models.transaction import Transaction
 from app.models.enums import TherapeuticArea
 from app.schemas.firm import (
     PortfolioCompanyCreate,
@@ -86,3 +87,18 @@ def delete_portfolio_company(
         raise HTTPException(status_code=404, detail="Portfolio company not found")
     db.delete(portco)
     db.commit()
+
+
+@router.get("/{portco_id}/transactions")
+def get_portco_transactions(
+    portco_id: UUID,
+    db: Session = Depends(get_db),
+    _user=Depends(get_current_user),
+):
+    return (
+        db.query(Transaction)
+        .filter(Transaction.portfolio_company_id == portco_id)
+        .order_by(Transaction.published_at.desc())
+        .limit(50)
+        .all()
+    )

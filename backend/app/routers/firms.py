@@ -8,6 +8,7 @@ from app.dependencies import get_current_user
 from app.models.firm import ManagementCompany, FundVehicle, PortfolioCompany
 from app.models.role import Role
 from app.models.individual import Individual
+from app.models.transaction import Transaction
 from app.models.enums import FirmType
 from app.schemas.firm import (
     ManagementCompanyCreate,
@@ -17,6 +18,7 @@ from app.schemas.firm import (
     PortfolioCompanyResponse,
 )
 from app.schemas.individual import IndividualListResponse
+from app.schemas.transaction import TransactionResponse
 
 router = APIRouter()
 
@@ -135,5 +137,20 @@ def get_firm_portfolio(
         db.query(PortfolioCompany)
         .filter(PortfolioCompany.management_company_id == firm_id)
         .order_by(PortfolioCompany.name)
+        .all()
+    )
+
+
+@router.get("/{firm_id}/transactions")
+def get_firm_transactions(
+    firm_id: UUID,
+    db: Session = Depends(get_db),
+    _user=Depends(get_current_user),
+):
+    return (
+        db.query(Transaction)
+        .filter(Transaction.management_company_id == firm_id)
+        .order_by(Transaction.published_at.desc())
+        .limit(50)
         .all()
     )

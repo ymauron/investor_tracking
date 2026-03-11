@@ -58,3 +58,39 @@ class EntityType(str, enum.Enum):
     portfolio_company = "portfolio_company"
     deal = "deal"
     movement_event = "movement_event"
+
+
+class TransactionType(str, enum.Enum):
+    ma = "ma"
+    ipo = "ipo"
+    licensing = "licensing"
+    clinical_trial = "clinical_trial"
+    fda_approval = "fda_approval"
+    fda_rejection = "fda_rejection"
+    funding_round = "funding_round"
+    partnership = "partnership"
+    bankruptcy = "bankruptcy"
+    other = "other"
+
+
+class TransactionSource(str, enum.Enum):
+    biospace = "biospace"
+    fierce_biotech = "fierce_biotech"
+    fierce_pharma = "fierce_pharma"
+
+
+class ClinicalStage(str, enum.Enum):
+    preclinical = "preclinical"
+    phase_1 = "phase_1"
+    phase_2 = "phase_2"
+    phase_3 = "phase_3"
+    nda_bla_filed = "nda_bla_filed"
+    approved = "approved"
+    post_market = "post_market"
+    unknown = "unknown"
+
+
+class Sentiment(str, enum.Enum):
+    positive = "positive"
+    negative = "negative"
+    neutral = "neutral"

@@ -193,4 +193,72 @@ export interface SearchResults {
   individuals: SearchResult[]
   firms: SearchResult[]
   deals: SearchResult[]
+  transactions: SearchResult[]
+}
+
+export interface Transaction {
+  id: string
+  title: string
+  url: string
+  source: string
+  published_at: string
+  raw_description: string | null
+  transaction_type: string | null
+  companies_mentioned: string[] | null
+  deal_value_mm: number | null
+  therapeutic_area: string | null
+  stage: string | null
+  summary: string | null
+  sentiment: string | null
+  portfolio_company_id: string | null
+  management_company_id: string | null
+  portfolio_company_name: string | null
+  management_company_name: string | null
+  is_reviewed: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface TransactionListResponse {
+  items: Transaction[]
+  total: number
+  page: number
+  per_page: number
+}
+
+export interface AlertRule {
+  id: string
+  name: string
+  therapeutic_area: string | null
+  transaction_type: string | null
+  keyword: string | null
+  company_name: string | null
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface AlertNotification {
+  id: string
+  transaction_id: string
+  alert_rule_id: string
+  is_read: boolean
+  created_at: string
+  transaction: Transaction
+  alert_rule_name: string
+}
+
+export interface CrawlStats {
+  new: number
+  skipped: number
+  errors: number
+}
+
+export interface TransactionStats {
+  total: number
+  by_type: Record<string, number>
+  by_source: Record<string, number>
+  by_area: Record<string, number>
+  this_week: number
+  this_month: number
 }

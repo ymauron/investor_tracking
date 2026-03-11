@@ -6,6 +6,8 @@ import {
   ArrowRightLeft,
   HandCoins,
   Bookmark,
+  Newspaper,
+  BellRing,
   LogOut,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -17,6 +19,8 @@ const links = [
   { to: '/movements', icon: ArrowRightLeft, label: 'Movements' },
   { to: '/deals', icon: HandCoins, label: 'Deals' },
   { to: '/lp-commitments', icon: Bookmark, label: 'LP Commitments' },
+  { to: '/transactions', icon: Newspaper, label: 'Transactions' },
+  { to: '/alerts', icon: BellRing, label: 'Alerts' },
 ]
 
 export function Sidebar({ onLogout }: { onLogout: () => void }) {

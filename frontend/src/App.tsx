@@ -11,6 +11,9 @@ import { FirmPage } from '@/pages/FirmPage'
 import { MovementsPage } from '@/pages/MovementsPage'
 import { DealsPage } from '@/pages/DealsPage'
 import { LPCommitmentsPage } from '@/pages/LPCommitmentsPage'
+import { TransactionsPage } from '@/pages/TransactionsPage'
+import { TransactionDetailPage } from '@/pages/TransactionDetailPage'
+import { AlertRulesPage } from '@/pages/AlertRulesPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +44,9 @@ export default function App() {
             <Route path="/movements" element={<MovementsPage />} />
             <Route path="/deals" element={<DealsPage />} />
             <Route path="/lp-commitments" element={<LPCommitmentsPage />} />
+            <Route path="/transactions" element={<TransactionsPage />} />
+            <Route path="/transactions/:id" element={<TransactionDetailPage />} />
+            <Route path="/alerts" element={<AlertRulesPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

@@ -11,4 +11,6 @@ from app.routers import (
     notes,
     graph,
     search,
+    transactions,
+    alerts,
 )
